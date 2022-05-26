@@ -38,25 +38,22 @@ class APIInstance(object):
                     self.ak_slots[i]['duration_str'] = '%d:%02d' % (hours, minutes)
             return self.ak_slots
 
-    def get_ak(self, ak_id):
-        if ak_id in self.aks:
-            return self.aks[ak_id]
+    def _get_it(self, it_type, its, it_id):
+        if it_id in its:
+            return its[it_id]
         else:
-            log_debug('Fetching AK %d...' % ak_id)
-            response = requests.get("https://ak.kif.rocks/%s/api/ak/%d/" % (self.slug, ak_id))
+            log_debug('Fetching %s/%d...' % (it_type, it_id))
+            response = requests.get("https://ak.kif.rocks/%s/api/%s/%d/" % (self.slug, it_type, it_id))
             response.raise_for_status()
-            self.aks[ak_id] = response.json()
-            return self.aks[ak_id]
+            its[it_id] = response.json()
+            return its[it_id]
+
+
+    def get_ak(self, ak_id):
+        return self._get_it('ak', self.aks, ak_id)
 
     def get_room(self, room_id):
-        if room_id in self.rooms:
-            return self.rooms[room_id]
-        else:
-            log_debug('Fetching Room %d...' % room_id)
-            response = requests.get("https://ak.kif.rocks/%s/api/room/%d/" % (self.slug, room_id))
-            response.raise_for_status()
-            self.rooms[room_id] = response.json()
-            return self.rooms[room_id]
+        return self._get_it('room', self.rooms, room_id)
 
 def main():
     slug = 'kif500'
