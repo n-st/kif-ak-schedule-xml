@@ -16,6 +16,7 @@ class APIInstance(object):
         self.slug = slug
         self.ak_slots = []
         self.aks = {}
+        self.rooms = {}
 
     def get_akslots(self):
         if self.ak_slots:
@@ -47,6 +48,16 @@ class APIInstance(object):
             self.aks[ak_id] = response.json()
             return self.aks[ak_id]
 
+    def get_room(self, room_id):
+        if room_id in self.rooms:
+            return self.rooms[room_id]
+        else:
+            log_debug('Fetching Room %d...' % room_id)
+            response = requests.get("https://ak.kif.rocks/%s/api/room/%d/" % (self.slug, room_id))
+            response.raise_for_status()
+            self.rooms[room_id] = response.json()
+            return self.rooms[room_id]
+
 def main():
     slug = 'kif500'
 
@@ -56,6 +67,7 @@ def main():
     api = APIInstance(slug)
     for slot in api.get_akslots():
         api.get_ak(slot['ak'])
+        api.get_room(slot['room'])
 
     first_slot = min([x['start'] for x in api.ak_slots if x['start']])
     first_day = datetime.date(year=first_slot.year,
@@ -68,18 +80,15 @@ def main():
             day=last_slot.day,
             )
 
-    rooms = {}
-    for room in [x['room'] for x in api.ak_slots if x['room']]:
-        rooms[room] = {'id': room}
-
     days = [first_day + datetime.timedelta(days=x) for x in range(0, (last_day-first_day).days+1)]
 
     msg = template.render(
             conf_title='KIF 50.0',
             conf_slug='kif500',
             days=days,
-            rooms=rooms,
+            rooms=api.rooms,
             slots=api.ak_slots,
+            aks=api.aks,
             conf_start=first_day,
             conf_end=last_day,
             conf_days=len(days),

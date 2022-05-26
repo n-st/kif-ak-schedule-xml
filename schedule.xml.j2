@@ -13,24 +13,27 @@
 {% for day in days %}
     <day index="{{loop.index}}" date="{{day.strftime('%Y-%m-%d')}}" start="{{day.strftime('%Y-%m-%dT08:00:00%z')}}" end="{{day.strftime('%Y-%m-%d22:00:00%z')}}">
     {% for room_id in rooms %}
-        <room name="{{rooms[room_id].id}}">
+        <room name="{{rooms[room_id].name}} ({{rooms[room_id].location}})">
         {% for slot in slots %}
             {% if slot.start and slot.start.strftime('%Y-%m-%d') == day.strftime('%Y-%m-%d') and slot.room == room_id %}
                 <event id="{{slot.id}}">
                 <date>{{slot.start.strftime('%Y-%m-%dT%H:%M:%S%z')}}</date>
                 <start>{{slot.start.strftime('%H:%M')}}</start>
                 <duration>{{slot.duration_str}}</duration>
-                <room>{{slot.room}}</room>
-                <slug>{{conf_slug + '-' + (slot.id | string())}}</slug>
-                <title>{{slot.ak}}</title>
-                <subtitle/>
-                <track/>
-                <type/>
+                <room>{{rooms[slot.room].name}} ({{rooms[slot.room].location}})</room>
+                <slug>{{conf_slug}}-ak{{slot.id}}</slug>
+                <title>{{aks[slot.ak].short_name}}</title>
+                <subtitle>{{aks[slot.ak].name}}</subtitle>
+                <track>{{aks[slot.ak].track}}</track>
+                <type>{{aks[slot.ak].category}}</type>
                 <language/>
                 <abstract/>
-                <description/>
+                <description>{{aks[slot.ak].description | replace('\r', '') | e}}</description>
                 <persons>
-                <!--<person guid="211fd9e8-eebd-4657-8a70-07614b0bdfea">DENOG ORGA</person>-->
+                {% for person in aks[slot.ak].owners %}
+                    {# <!--<person guid="211fd9e8-eebd-4657-8a70-07614b0bdfea">DENOG ORGA</person>--> #}
+                    <person>{{person}}</person>
+                {% endfor %}
                 </persons>
                 <links/>
                 </event>
