@@ -1,0 +1,43 @@
+<schedule>
+<generator name="akxml" />
+<version>1.0</version>
+<conference>
+<title>{{ conf_title }}</title>
+<acronym>{{ conf_slug }}</acronym>
+<days>{{ conf_days }}</days>
+<start>{{ conf_start.strftime('%Y-%m-%d') }}</start>
+<end>{{ conf_end.strftime('%Y-%m-%d') }}</end>
+<timeslot_duration>00:10</timeslot_duration>
+<time_zone_name>Europe/Berlin</time_zone_name>
+</conference>
+{% for day in days %}
+    <day index="{{loop.index}}" date="{{day.strftime('%Y-%m-%d')}}" start="{{day.strftime('%Y-%m-%dT08:00:00%z')}}" end="{{day.strftime('%Y-%m-%d22:00:00%z')}}">
+    {% for room_id in rooms %}
+        <room name="{{rooms[room_id].id}}">
+        {% for slot in slots %}
+            {% if slot.start and slot.start.strftime('%Y-%m-%d') == day.strftime('%Y-%m-%d') and slot.room == room_id %}
+                <event id="{{slot.id}}">
+                <date>{{slot.start.strftime('%Y-%m-%dT%H:%M:%S%z')}}</date>
+                <start>{{slot.start.strftime('%H:%M')}}</start>
+                <duration>{{slot.duration_str}}</duration>
+                <room>{{slot.room}}</room>
+                <slug>{{conf_slug + '-' + (slot.id | string())}}</slug>
+                <title>{{slot.ak}}</title>
+                <subtitle/>
+                <track/>
+                <type/>
+                <language/>
+                <abstract/>
+                <description/>
+                <persons>
+                <!--<person guid="211fd9e8-eebd-4657-8a70-07614b0bdfea">DENOG ORGA</person>-->
+                </persons>
+                <links/>
+                </event>
+            {% endif %}
+        {% endfor %}
+        </room>
+    {% endfor %}
+    </day>
+{% endfor %}
+</schedule>
