@@ -22,17 +22,17 @@
                 <duration>{{slot.duration_str}}</duration>
                 <room>{{rooms[slot.room].name}} ({{rooms[slot.room].location}})</room>
                 <slug>{{conf_slug}}-ak{{slot.id}}</slug>
-                <title>{{aks[slot.ak].short_name}}</title>
-                <subtitle>{{aks[slot.ak].name}}</subtitle>
-                <track>{{aks[slot.ak].track}}</track>
-                <type>{{aks[slot.ak].category}}</type>
+                <title>{{aks[slot.ak].short_name | default('')}}</title>
+                <subtitle>{{aks[slot.ak].name | default('')}}</subtitle>
+                <track>{% if aks[slot.ak].track in tracks %}{{tracks.get(aks[slot.ak].track).get('name')}}{% endif %}</track>
+                <type>{% if aks[slot.ak].category in categories %}{{categories.get(aks[slot.ak].category).get('name')}}{% endif %}</type>
                 <language/>
                 <abstract/>
                 <description>{{aks[slot.ak].description | replace('\r', '') | e}}</description>
                 <persons>
                 {% for person in aks[slot.ak].owners %}
                     {# <!--<person guid="211fd9e8-eebd-4657-8a70-07614b0bdfea">DENOG ORGA</person>--> #}
-                    <person>{{person}}</person>
+                    <person>{{owners[person].name}}{% if owners[person].institution %} ({{owners[person].institution}}){% endif %}</person>
                 {% endfor %}
                 </persons>
                 <links/>

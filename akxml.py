@@ -17,6 +17,9 @@ class APIInstance(object):
         self.ak_slots = []
         self.aks = {}
         self.rooms = {}
+        self.owners = {}
+        self.categorys = {}
+        self.tracks = {}
 
     def get_akslots(self):
         if self.ak_slots:
@@ -36,9 +39,12 @@ class APIInstance(object):
                     hours, remainder = divmod(self.ak_slots[i]['duration'].total_seconds(), 3600)
                     minutes, seconds = divmod(remainder, 60)
                     self.ak_slots[i]['duration_str'] = '%d:%02d' % (hours, minutes)
+                self.get_room(self.ak_slots[i]['room'])
             return self.ak_slots
 
     def _get_it(self, it_type, its, it_id):
+        if not it_id:
+            return {}
         if it_id in its:
             return its[it_id]
         else:
@@ -50,10 +56,23 @@ class APIInstance(object):
 
 
     def get_ak(self, ak_id):
-        return self._get_it('ak', self.aks, ak_id)
+        ak = self._get_it('ak', self.aks, ak_id)
+        for owner in ak['owners']:
+            self.get_owner(owner)
+        self.get_category(ak['category'])
+        self.get_track(ak['track'])
 
     def get_room(self, room_id):
         return self._get_it('room', self.rooms, room_id)
+
+    def get_owner(self, owner_id):
+        return self._get_it('akowner', self.owners, owner_id)
+
+    def get_category(self, category_id):
+        return self._get_it('akcategory', self.categorys, category_id)
+
+    def get_track(self, track_id):
+        return self._get_it('aktrack', self.tracks, track_id)
 
 def main():
     slug = 'kif500'
@@ -83,9 +102,12 @@ def main():
             conf_title='KIF 50.0',
             conf_slug='kif500',
             days=days,
-            rooms=api.rooms,
             slots=api.ak_slots,
             aks=api.aks,
+            rooms=api.rooms,
+            owners=api.owners,
+            categories=api.categorys,
+            tracks=api.tracks,
             conf_start=first_day,
             conf_end=last_day,
             conf_days=len(days),
