@@ -2,20 +2,27 @@ AK Plan as schedule.xml
 =======================
 
 Converts the KIF AK plan to the widely-used **`schedule.xml`** format,
-understood by (e.g.) **Giggity** ([Google
-Play](https://play.google.com/store/apps/details?id=net.gaast.giggity),
-[F-Droid](https://f-droid.org/de/packages/net.gaast.giggity/)).  
+understood by (e.g.) the **Giggity** app.  
 This allows you to view your AKs in a mobile-optimized view, mark your
 favourites, and get reminded in time before they start.
 
 Usage
 -----
 
-Tap the `+` button on the Giggity main screen and enter the URL:  
-http://kif500.tmp.voidptr.de/schedule.xml  
-(sorry, no HTTPS at the moment…)
+1. Install Giggity, e.g. via [Google
+   Play](https://play.google.com/store/apps/details?id=net.gaast.giggity) or
+   [F-Droid](https://f-droid.org/de/packages/net.gaast.giggity/).  
+   <img src="/img/qr_playstore.png" alt="Play Store link" width="40%"/>
+   <img src="/img/qr_fdroid.png" alt="F-Droid link" width="40%"/>
+2. Tap the `+` button on the Giggity main screen.
+3. Enter or scan the URL:  
+   http://kif500.tmp.voidptr.de/schedule.xml  
+   (sorry, no HTTPS at the moment…)  
+   <img src="/img/qr_schedule.png" alt="Schedule file link" width="40%"/><br />
+   Note: The schedule file is updated every 5 minutes.
+4. Use Giggity normally, e.g. mark "talks" (AKs) with "star" to highlight them,
+   or with "bell" to receive a notification before they begin.
 
-The schedule file is updated every 5 minutes.
 
 Example screenshots
 -------------------
