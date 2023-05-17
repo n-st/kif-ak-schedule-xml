@@ -75,6 +75,7 @@ class APIInstance(object):
         return self._get_it('aktrack', self.tracks, track_id)
 
 def main(event_slug, event_title, output_filename=None):
+    log_debug('Processing "%s" (slug "%s")...' % (event_title, event_slug))
 
     with open('schedule.xml.j2') as file_:
         template = jinja2.Template(file_.read())
