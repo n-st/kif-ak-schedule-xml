@@ -74,7 +74,7 @@ class APIInstance(object):
     def get_track(self, track_id):
         return self._get_it('aktrack', self.tracks, track_id)
 
-def main(event_slug, event_title):
+def main(event_slug, event_title, output_filename=None):
 
     with open('schedule.xml.j2') as file_:
         template = jinja2.Template(file_.read())
@@ -126,7 +126,12 @@ def main(event_slug, event_title):
     lines = [line for line in lines if line.strip()]
     msg = '\n'.join(lines)
 
-    print(msg)
+    if output_filename:
+        with open(output_filename, 'w') as f:
+            for line in msg+'\n':
+                f.write(line)
+    else:
+        print(msg)
 
 
 """
@@ -177,4 +182,4 @@ def main(event_slug, event_title):
 if __name__ == '__main__':
     event_slug = 'kif510'
     event_title = 'KIF 51.0'
-    main(event_slug, event_title)
+    main(event_slug, event_title, 'schedule.xml')
