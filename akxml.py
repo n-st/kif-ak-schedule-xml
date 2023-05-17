@@ -127,6 +127,7 @@ def main(event_slug, event_title, output_filename=None):
     msg = '\n'.join(lines)
 
     if output_filename:
+        log_debug('Writing output to "%s"...' % (output_filename))
         with open(output_filename, 'w') as f:
             for line in msg+'\n':
                 f.write(line)
@@ -180,6 +181,14 @@ def main(event_slug, event_title, output_filename=None):
 
 
 if __name__ == '__main__':
-    event_slug = 'kif510'
-    event_title = 'KIF 51.0'
-    main(event_slug, event_title, 'schedule.xml')
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('slug', help='The event slug to fetch from the AK Planning tool (e.g. kif420).')
+    parser.add_argument('title', help='The event title to use in the schedule.xml output (e.g. "KIF 42,0".')
+    parser.add_argument('--output', '-o', help='Output file to write schedule.xml content to (e.g. /tmp/schedule.xml).')
+    args = parser.parse_args()
+
+    event_slug = args.slug
+    event_title = args.title
+    output_filename = args.output
+    main(event_slug, event_title, output_filename)
