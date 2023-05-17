@@ -85,16 +85,22 @@ def main():
         api.get_ak(slot['ak'])
         api.get_room(slot['room'])
 
-    first_slot = min([x['start'] for x in api.ak_slots if x['start']])
-    first_day = datetime.date(year=first_slot.year,
-            month=first_slot.month,
-            day=first_slot.day,
-            )
-    last_slot = max([x['start'] for x in api.ak_slots if x['start']])
-    last_day = datetime.date(year=last_slot.year,
-            month=last_slot.month,
-            day=last_slot.day,
-            )
+    slot_starts = [x['start'] for x in api.ak_slots if x['start']]
+    if not slot_starts:
+        # no AKs scheduled yet (we're probably still before the AK scheduling night)
+        first_day = datetime.date(year=1970, month=1, day=1)
+        last_day = datetime.date(year=1970, month=1, day=2)
+    else:
+        first_slot = min([x['start'] for x in api.ak_slots if x['start']])
+        first_day = datetime.date(year=first_slot.year,
+                month=first_slot.month,
+                day=first_slot.day,
+                )
+        last_slot = max([x['start'] for x in api.ak_slots if x['start']])
+        last_day = datetime.date(year=last_slot.year,
+                month=last_slot.month,
+                day=last_slot.day,
+                )
 
     days = [first_day + datetime.timedelta(days=x) for x in range(0, (last_day-first_day).days+1)]
 
