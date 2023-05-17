@@ -11,7 +11,7 @@
 <time_zone_name>Europe/Berlin</time_zone_name>
 </conference>
 {% for day in days %}
-    <day index="{{loop.index}}" date="{{day.strftime('%Y-%m-%d')}}" start="{{day.strftime('%Y-%m-%dT08:00:00%z')}}" end="{{day.strftime('%Y-%m-%d22:00:00%z')}}">
+    <day index="{{loop.index}}" date="{{day.strftime('%Y-%m-%d')}}" start="{{day.strftime('%Y-%m-%dT08:00:00%z')}}" end="{{day.strftime('%Y-%m-%dT22:00:00%z')}}">
     {% for room_id in rooms %}
         <room name="{{rooms[room_id].name}} ({{rooms[room_id].location}})">
         {% for slot in slots %}
