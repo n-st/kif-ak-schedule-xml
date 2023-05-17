@@ -122,6 +122,8 @@ def main(event_slug, event_title, output_filename=None):
             conf_days=len(days),
             )
 
+    comments.append('This schedule.xml was generated at ' + dt.now().strftime('%Y-%m-%dT22:00:00%z'))
+
     # remove empty lines
     lines = ['<!-- ' + comment + ' -->' for comment in comments] + msg.split('\n')
     lines = [line for line in lines if line.strip()]
