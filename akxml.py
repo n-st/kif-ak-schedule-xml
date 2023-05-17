@@ -79,6 +79,8 @@ def main(event_slug, event_title):
     with open('schedule.xml.j2') as file_:
         template = jinja2.Template(file_.read())
 
+    comments = []
+
     api = APIInstance(event_slug)
     for slot in api.get_akslots():
         api.get_ak(slot['ak'])
@@ -87,6 +89,7 @@ def main(event_slug, event_title):
     slot_starts = [x['start'] for x in api.ak_slots if x['start']]
     if not slot_starts:
         # no AKs scheduled yet (we're probably still before the AK scheduling night)
+        comments.append('No AKs scheduled yet (we\'re probably still before the AK scheduling night)')
         first_day = datetime.date(year=1970, month=1, day=1)
         last_day = datetime.date(year=1970, month=1, day=2)
     else:
@@ -119,7 +122,7 @@ def main(event_slug, event_title):
             )
 
     # remove empty lines
-    lines = msg.split('\n')
+    lines = ['<!-- ' + comment + ' -->' for comment in comments] + msg.split('\n')
     lines = [line for line in lines if line.strip()]
     msg = '\n'.join(lines)
 
