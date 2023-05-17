@@ -74,13 +74,12 @@ class APIInstance(object):
     def get_track(self, track_id):
         return self._get_it('aktrack', self.tracks, track_id)
 
-def main():
-    slug = 'kif510'
+def main(event_slug, event_title):
 
     with open('schedule.xml.j2') as file_:
         template = jinja2.Template(file_.read())
 
-    api = APIInstance(slug)
+    api = APIInstance(event_slug)
     for slot in api.get_akslots():
         api.get_ak(slot['ak'])
         api.get_room(slot['room'])
@@ -105,8 +104,8 @@ def main():
     days = [first_day + datetime.timedelta(days=x) for x in range(0, (last_day-first_day).days+1)]
 
     msg = template.render(
-            conf_title='KIF 51.0',
-            conf_slug='kif510',
+            conf_title=event_title,
+            conf_slug=event_slug,
             days=days,
             slots=api.ak_slots,
             aks=api.aks,
@@ -173,4 +172,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    event_slug = 'kif510'
+    event_title = 'KIF 51.0'
+    main(event_slug, event_title)
