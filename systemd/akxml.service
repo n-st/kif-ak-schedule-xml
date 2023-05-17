@@ -1,0 +1,10 @@
+[Unit]
+Description=Generate AK schedule XML
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kif-ak-schedule-xml
+ExecStart=/bin/sh -c './akxml.py > ./schedule.xml'
+
+[Install]
+WantedBy=multi-user.target
