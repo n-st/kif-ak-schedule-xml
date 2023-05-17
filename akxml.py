@@ -75,7 +75,7 @@ class APIInstance(object):
         return self._get_it('aktrack', self.tracks, track_id)
 
 def main():
-    slug = 'kif500'
+    slug = 'kif510'
 
     with open('schedule.xml.j2') as file_:
         template = jinja2.Template(file_.read())
@@ -99,8 +99,8 @@ def main():
     days = [first_day + datetime.timedelta(days=x) for x in range(0, (last_day-first_day).days+1)]
 
     msg = template.render(
-            conf_title='KIF 50.0',
-            conf_slug='kif500',
+            conf_title='KIF 51.0',
+            conf_slug='kif510',
             days=days,
             slots=api.ak_slots,
             aks=api.aks,
