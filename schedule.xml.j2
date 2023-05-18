@@ -37,10 +37,10 @@
                 </persons>
                 <links>
                 {% if aks[slot.ak].link %}
-                    <link href="{{aks[slot.ak].link}}">Information</link>
+                    <link href="{{aks[slot.ak].link|safe}}">Information</link>
                 {% endif %}
                 {% if aks[slot.ak].protocol_link %}
-                    <link href="{{aks[slot.ak].protocol_link}}">Protokoll</link>
+                    <link href="{{aks[slot.ak].protocol_link|safe}}">Protokoll</link>
                 {% endif %}
                 </links>
                 </event>
