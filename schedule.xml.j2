@@ -13,14 +13,14 @@
 {% for day in days %}
     <day index="{{loop.index}}" date="{{day.strftime('%Y-%m-%d')}}" start="{{day.strftime('%Y-%m-%dT08:00:00%z')}}" end="{{day.strftime('%Y-%m-%dT22:00:00%z')}}">
     {% for room_id in rooms %}
-        <room name="{{rooms[room_id].name}} ({{rooms[room_id].location}})">
+        <room name="{{rooms[room_id].name}}{% if rooms[room_id].location %} ({{rooms[room_id].location}}){% endif %}">
         {% for slot in slots %}
             {% if slot.start and slot.start.strftime('%Y-%m-%d') == day.strftime('%Y-%m-%d') and slot.room == room_id %}
                 <event id="{{slot.id}}">
                 <date>{{slot.start.strftime('%Y-%m-%dT%H:%M:%S%z')}}</date>
                 <start>{{slot.start.strftime('%H:%M')}}</start>
                 <duration>{{slot.duration_str}}</duration>
-                <room>{{rooms[slot.room].name}} ({{rooms[slot.room].location}})</room>
+                <room>{{rooms[slot.room].name}}{% if rooms[room_id].location %} ({{rooms[slot.room].location}}){% endif %}</room>
                 <slug>{{conf_slug}}-ak{{slot.id}}</slug>
                 <title>{{aks[slot.ak].short_name | default('')}}</title>
                 <subtitle>{{aks[slot.ak].name | default('')}}</subtitle>
