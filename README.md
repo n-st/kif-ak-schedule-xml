@@ -6,7 +6,7 @@ understood by (e.g.) the **Giggity** app.
 This allows you to view your AKs in a mobile-optimized view, mark your
 favourites, and get reminded in time before they start.
 
-**Ready to serve the KIF 51,0 AK plan at [https://kif510.tmp.voidptr.de/schedule.xml](https://kif510.tmp.voidptr.de/schedule.xml).**
+**There is currently no KIF taking place, so there is no online schedule.xml.**
 
 Usage
 -----
@@ -18,7 +18,7 @@ Usage
    <img src="/img/qr-fdroid.png" alt="F-Droid link" width="25%"/>
 2. Tap the `+` button on the Giggity main screen.
 3. Enter or scan the URL:  
-   `https://kif510.tmp.voidptr.de/schedule.xml`  
+   ~https://kif510.tmp.voidptr.de/schedule.xml~  
    <img src="/img/qr-schedule.png" alt="Schedule file link" width="25%"/><br />
    Note: The schedule file is updated every 5 minutes.
 4. Use Giggity normally, e.g. mark "talks" (AKs) with "star" to highlight them,
