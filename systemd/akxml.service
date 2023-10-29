@@ -4,7 +4,7 @@ Description=Generate AK schedule XML
 [Service]
 Type=simple
 WorkingDirectory=/opt/kif-ak-schedule-xml
-ExecStart=/opt/kif-ak-schedule-xml/akxml.py kif510 "KIF 51,0" -o schedule.xml
+ExecStart=/opt/kif-ak-schedule-xml/akxml.py kif515 "KIF 51,5" -o schedule.xml
 
 [Install]
 WantedBy=multi-user.target
